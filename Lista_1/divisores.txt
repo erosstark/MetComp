@@ -1,0 +1,32 @@
+	Esse programa calcula e exibe os divisores em comum diferente de 1
+entre dois números.
+	Caso não existam divisores em comum uma mensagem será exibida.
+
+
+m, n = número inteiro qualquer.
+i = número que vai dividir m e n 
+
+
+leia m, n
+
+definir i = 2
+definir numero_divisores = 0
+
+enquanto i <= |n| ou i <= |m| repita:{
+	se resto de n/i == 0:{
+		se resto de m/i == 0:{
+			exibir (i)
+			numero_divisores + 1
+		}
+	}	
+	soma + 1 em i
+}
+
+
+se numero_divisores == 0:{
+	exibir "Não existem divisores em comum entre m e n além do número 1."
+}
+
+exibir "Total de divisores em comum entre n e m é: numero_divisores."
+
+
