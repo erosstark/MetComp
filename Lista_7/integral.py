@@ -28,7 +28,6 @@ def Trapezio(fun,a,b,k):
     fj = 0
     for j in range(1,2**k):
         fj += fun(a + j*delx)
-        j += 1
     t = (delx/2) * (fun(a) + fun(b) + 2*fj)
     return t
 #================================================================
