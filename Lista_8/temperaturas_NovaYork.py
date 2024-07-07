@@ -30,3 +30,4 @@ outfile_celsius = open(r"temperaturas_NovaYork_Celsius.txt", "w")
 outfile_celsius.write("mes/ano   temperatura em celsius\n")
 for mes, temp in zip(meses_ano, temperaturas_celsius):
     outfile_celsius.write(f"{mes:10} {temp:.1f} °C  \n")
+outfile_celsius.close()
