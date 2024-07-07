@@ -1,8 +1,11 @@
 import numpy as np
 
-def EDOs(f,S0,t0,tf,n):
+def Euler(f,S0,t0,tf,n):
     t = np.zeros(n+1)
-    S = np.zeros((n+1,len(S0))) # S[i,k] solução equação k no tempo t[i]
+    if isinstance(S0, (float, int)):  #True if S0 is a list of floats or ints
+        S = np.zeros(n+1)  # S[k] is the solution at time t[k]
+    else:
+        S = np.zeros((n+1,len(S0)))
     S[0] = S0
     t[0] = t0
     h = float(tf-t0)/n
