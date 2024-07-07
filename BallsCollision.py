@@ -16,8 +16,8 @@ BLACK = (0, 0, 0)
 
 # Ball properties
 NUM_BALLS = 100
-RADIUS = 10
-SPEED = 50
+RADIUS = 5
+SPEED = 2
 
 class Ball:
     def __init__(self, x, y, vx, vy, color):
