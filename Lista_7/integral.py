@@ -74,4 +74,9 @@ print(f"R = {N * s} com o método de Simpson")
 print(f"R = {N * I} com a integral scipy")
 
 
+""" 
+O exerc pedia pra comparar os métodos.
+"""
+
+
 
