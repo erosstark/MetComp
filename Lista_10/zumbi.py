@@ -53,6 +53,6 @@ fase1 : dict = {'Σ' : 20, 'β': 0.03, 'ρ': 1, 'δs': 0, 'δi': 0, 'α': 0}
 fase2 : dict = {'Σ' : 2, 'β': 0.0012, 'ρ': 1, 'δs': 0, 'δi': 0.014, 'α': 0.0016}
 fase3 : dict = {'Σ' : 2, 'β': 0, 'ρ': 1, 'δs': 0.0067, 'δi': 0.014, 'α': 0.006}
 
-def zumbi(t, S, I, Z, R):
+def zumbi(s,t, params):
     return np.array([Σ - βSZ - δsS, βSZ - ρI - δiI, ρI - αSZ, δsS + δiI + αSZ])
 
