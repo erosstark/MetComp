@@ -1,3 +1,4 @@
+#%%
 """ 
 Eros Moreira Ferreira
 
@@ -43,16 +44,41 @@ conjunto de valores de parametros:
 
 
 """
-
+#%%
 import numpy as np
 import matplotlib.pyplot as plt
 from euler_syst import Euler
 from rk4 import RungeKutta4
-
+#%%
+# Função zumbi
+def zumbi(s,t, params):
+    Σ = params[0]['Σ']
+    β = params[0]['β']
+    ρ = params[0]['ρ']
+    δs = params[0]['δs']
+    δi = params[0]['δi']
+    α = params[0]['α']
+    S = s[0];  Z = s[1]; I = s[2]; R = s[3]
+    
+    return np.array([Σ - β*S*Z - δs*S, β*S*Z - ρ*I - δi*I, ρ*I - α*S*Z, δs*S + δi*I + α*S*Z])
+#%%
+# Paarâmetros de cada fase.
 fase1 : dict = {'Σ' : 20, 'β': 0.03, 'ρ': 1, 'δs': 0, 'δi': 0, 'α': 0}
 fase2 : dict = {'Σ' : 2, 'β': 0.0012, 'ρ': 1, 'δs': 0, 'δi': 0.014, 'α': 0.0016}
 fase3 : dict = {'Σ' : 2, 'β': 0, 'ρ': 1, 'δs': 0.0067, 'δi': 0.014, 'α': 0.006}
-
-def zumbi(s,t, params):
-    return np.array([Σ - βSZ - δsS, βSZ - ρI - δiI, ρI - αSZ, δsS + δiI + αSZ])
-
+#%%
+# Condições iniciais. ( S, Z, I, R )
+S = [60, 1, 0, 0]   
+                    #[i , f] em horas
+timeSpan = np.array([[0, 4],\
+                     [4, 28],\
+                     [28, 60]]) # fase 1,\ fase 2,\ fase 3
+dt = 0.05 # passo de tempo
+#%%
+# Solução pelo metodo de Euler
+#for fase, i in zip([fase1, fase2, fase3], range(0,3)):
+ #   sol, t = Euler(zumbi, S, timeSpan[i,0], timeSpan[i,1], fase, TimeStep=dt)
+#%%
+sol, t = Euler(zumbi, S, timeSpan[0,0], timeSpan[0,1], fase1, TimeStep=dt)
+sol2, t2 = Euler(zumbi, S, timeSpan[1,0], timeSpan[1,1], fase2, TimeStep=dt)
+sol3, t3 = Euler(zumbi, S, timeSpan[2,0], timeSpan[2,1], fase3, TimeStep=dt)
