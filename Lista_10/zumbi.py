@@ -1,4 +1,3 @@
-#%%
 """ 
 Eros Moreira Ferreira
 
@@ -44,12 +43,12 @@ conjunto de valores de parametros:
 
 
 """
-#%%
 import numpy as np
 import matplotlib.pyplot as plt
 from euler_syst import Euler
 from rk4 import RungeKutta4
-#%%
+
+
 # Função zumbi
 def zumbi(s,t, params):
     Σ = params[0]['Σ']
@@ -60,25 +59,45 @@ def zumbi(s,t, params):
     α = params[0]['α']
     S = s[0];  Z = s[1]; I = s[2]; R = s[3]
     
-    return np.array([Σ - β*S*Z - δs*S, β*S*Z - ρ*I - δi*I, ρ*I - α*S*Z, δs*S + δi*I + α*S*Z])
-#%%
+    return np.array([Σ - β*S*Z - δs*S, ρ*I - α*S*Z, β*S*Z - ρ*I - δi*I, δs*S + δi*I + α*S*Z])
+    
+    
 # Paarâmetros de cada fase.
 fase1 : dict = {'Σ' : 20, 'β': 0.03, 'ρ': 1, 'δs': 0, 'δi': 0, 'α': 0}
 fase2 : dict = {'Σ' : 2, 'β': 0.0012, 'ρ': 1, 'δs': 0, 'δi': 0.014, 'α': 0.0016}
 fase3 : dict = {'Σ' : 2, 'β': 0, 'ρ': 1, 'δs': 0.0067, 'δi': 0.014, 'α': 0.006}
-#%%
-# Condições iniciais. ( S, Z, I, R )
-S = [60, 1, 0, 0]   
+
+
+
+# Condições iniciais. S0 = ( S, Z, I, R )
+S0 = [60, 1, 0, 0]   
                     #[i , f] em horas
 timeSpan = np.array([[0, 4],\
                      [4, 28],\
                      [28, 60]]) # fase 1,\ fase 2,\ fase 3
 dt = 0.05 # passo de tempo
-#%%
+
+
 # Solução pelo metodo de Euler
-#for fase, i in zip([fase1, fase2, fase3], range(0,3)):
- #   sol, t = Euler(zumbi, S, timeSpan[i,0], timeSpan[i,1], fase, TimeStep=dt)
-#%%
-sol, t = Euler(zumbi, S, timeSpan[0,0], timeSpan[0,1], fase1, TimeStep=dt)
-sol2, t2 = Euler(zumbi, S, timeSpan[1,0], timeSpan[1,1], fase2, TimeStep=dt)
-sol3, t3 = Euler(zumbi, S, timeSpan[2,0], timeSpan[2,1], fase3, TimeStep=dt)
+for fase, i in zip([fase1, fase2, fase3], range(0,3)):
+   sol, t = Euler(zumbi, S0, timeSpan[i,0], timeSpan[i,1], fase, TimeStep=dt)
+   S0 = sol[-1,:] # Atualiza o as condiçoes iniciais de cada fase
+
+   # Plota os resultados
+   humanos, = plt.plot(t, sol[:,0], 'r')
+   zumbis, = plt.plot(t, sol[:,1], 'g')
+   infectados, = plt.plot(t, sol[:,2], 'b')
+   removidsos, = plt.plot(t, sol[:,3], 'y')
+
+plt.axvspan(0, 4, color = "green", alpha = 0.1)  # Pinta as regiões de cada fase
+plt.axvspan(4, 28, color = "pink", alpha = 0.1)
+plt.axvspan(28, 60, color = "yellow", alpha = 0.1)
+plt.legend([humanos, zumbis, infectados, removidsos], ["Humanos suscetíveis (S)", "Zumbis(Z)",\
+    "Humanos infectados(I)", "Removidos(R)"])
+plt.xlabel("Tempo (horas)")
+plt.ylabel("Idinvíduos")
+plt.title("Noite dos Mortos Vivos")
+
+plt.show()
+
+
