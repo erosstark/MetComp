@@ -1,4 +1,5 @@
 from manim import *
+import numpy as np
 
 class SphericalPendulum(Scene):
     def construct(self):
@@ -28,7 +29,7 @@ class SphericalPendulum(Scene):
             pendulum_mass.move_to(new_position)
             rod.put_start_and_end_on(pendulum_origin, pendulum_mass.get_center())
 
-        self.play(UpdateFromAlphaFunc(pendulum_mass, update_pendul  um, run_time=10))
+        self.play(UpdateFromAlphaFunc(pendulum_mass, update_pendulum, run_time=10))
 
 if __name__ == "__main__":
     scene = SphericalPendulum()
